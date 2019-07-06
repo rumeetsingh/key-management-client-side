@@ -11,6 +11,10 @@ class SignUp extends React.Component{
 
     state = { phase:0 }
 
+    componentDidMount = () => {
+        document.title = "Sign Up | Foxedo KMS";
+    };
+
     renderInputError = (meta) => {
         if(meta.touched&&meta.error){
             return <small>{meta.error}</small>;

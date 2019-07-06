@@ -1,11 +1,12 @@
 import React from 'react';
-import { Router,Route } from 'react-router-dom';
+import { Router,Route,Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signInWithToken } from '../actions';
 import history from '../history';
 import Spinner from './Spinner';
 import Navbar from './Navbar';
-import Home from './Home';
+import HomePublic from './HomePublic';
+import Dashboard from './Dashboard';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 
@@ -21,6 +22,13 @@ class App extends React.Component{
         this.setState({phase:0});
     };
 
+    renderHomeComponent = () => {
+        if(this.props.auth.isSignedIn){
+            return <Route path="/" exact component={Dashboard} />
+        };
+        return <Route path="/" exact component={HomePublic} />
+    };
+
     render(){
         if(this.state.phase===1){
             return <Spinner />
@@ -28,13 +36,21 @@ class App extends React.Component{
         return(
             <Router history={history}>
                 <Navbar />
-                <Route path="/" exact component={Home} />
-                <Route path="/signup" exact component={SignUp} />
-                <Route path="/signin" exact component={SignIn} />
+                <Switch>
+                    {this.renderHomeComponent()}
+                    <Route path="/signup" exact component={SignUp} />
+                    <Route path="/signin" exact component={SignIn} /> 
+                </Switch>
             </Router>
         );
     };
 }
 
 
-export default connect(null,{ signInWithToken, })(App);
+const mapStateToProps = state => {
+    return {
+        auth : state.auth,
+    };
+};
+
+export default connect(mapStateToProps,{ signInWithToken, })(App);

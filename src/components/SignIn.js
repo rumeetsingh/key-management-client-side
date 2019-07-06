@@ -10,6 +10,7 @@ class SignIn extends React.Component{
     state = { phase:0 }
 
     componentDidMount = () => {
+        document.title = "Sign In | Foxedo KMS";
         if(this.props.auth.accountJustCreated===true){
             this.setState({phase:5});
         };

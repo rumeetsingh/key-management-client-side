@@ -8,7 +8,6 @@ const INITIAL_STATE = {
     details:null,
 };
 
-
 export default (state=INITIAL_STATE,action) => {
     switch(action.type){
         case ACCOUNT_JUST_CREATED:
