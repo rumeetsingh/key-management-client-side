@@ -1,0 +1,6 @@
+export const ACCOUNT_JUST_CREATED = "ACCOUNT_JUST_CREATED";
+export const SIGN_IN = "SIGN_IN";
+export const SIGN_IN_ERROR = "SIGN_IN_ERROR";
+export const SIGN_IN_WITH_TOKEN = "SIGN_IN_WITH_TOKEN";
+export const FETCH_ACCOUNT_DETAILS = "FETCH_ACCOUNT_DETAILS";
+export const SIGN_OUT = "SIGN_OUT";
