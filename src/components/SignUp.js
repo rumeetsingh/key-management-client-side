@@ -5,6 +5,8 @@ import { accountJustCreated } from '../actions';
 import api from '../apis';
 import history from '../history';
 import Spinner from './Spinner';
+import nacl from 'tweetnacl';
+import utils from 'tweetnacl-util';
 
 
 class SignUp extends React.Component{
@@ -13,6 +15,16 @@ class SignUp extends React.Component{
 
     componentDidMount = () => {
         document.title = "Sign Up | Foxedo KMS";
+    };
+
+    encryptString = (password) => {
+        const encodeBase64 = utils.encodeBase64;
+        const nonce = nacl.randomBytes(24);
+        const secretKey = Buffer.from((process.env.REACT_APP_NOT_SECRET_CODE).toString(), 'utf8')
+        const secretData = Buffer.from(password, 'utf8')
+        const encrypted = nacl.secretbox(secretData, nonce, secretKey)
+        const result = `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`
+        return result;
     };
 
     renderInputError = (meta) => {
@@ -67,6 +79,7 @@ class SignUp extends React.Component{
 
     onSubmit = async ({name,email,password}) => {
         await this.setState({phase:0});
+        password = this.encryptString(password)
         const emailTaken = await api.get(`/users/check/?email=${email}`)
         if(emailTaken.data.message===true){
             this.setState({phase:4});

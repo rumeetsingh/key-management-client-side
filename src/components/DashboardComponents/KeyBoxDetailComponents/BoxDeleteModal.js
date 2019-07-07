@@ -5,11 +5,23 @@ import { deselectBox,fetchBoxes } from '../../../actions';
 import api from '../../../apis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faKey } from '@fortawesome/free-solid-svg-icons'
+import nacl from 'tweetnacl';
+import utils from 'tweetnacl-util';
 
 
 class BoxDeleteModal extends React.Component{
 
     state = { phase:0 }
+
+    encryptString = (password) => {
+        const encodeBase64 = utils.encodeBase64;
+        const nonce = nacl.randomBytes(24);
+        const secretKey = Buffer.from((process.env.REACT_APP_NOT_SECRET_CODE).toString(), 'utf8')
+        const secretData = Buffer.from(password, 'utf8')
+        const encrypted = nacl.secretbox(secretData, nonce, secretKey)
+        const result = `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`
+        return result;
+    };
 
     renderWrongPasswordError = () => {
         if(this.state.phase===5){
@@ -21,8 +33,8 @@ class BoxDeleteModal extends React.Component{
     renderLoadingBotton = () => {
         if(this.state.phase===1){
             return (
-                <button class="btn btn-danger mt-3" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
+                <button className="btn btn-danger mt-3" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...
                 </button>
             );
         };
@@ -46,8 +58,9 @@ class BoxDeleteModal extends React.Component{
     onSubmit = async ({password}) => {
         await this.setState({phase:1});
         let id = this.props.data.id;
+        let encPAssword = this.encryptString(password);
         try{
-            await api.post('/keys/boxdelete/',{ id,password },{ headers : { Authorization : `Bearer ${this.props.token}` } });
+            await api.post('/keys/boxdelete/',{ id:id,password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });
             await this.props.fetchBoxes(this.props.token);
             await window.$('#boxDeleteModal').modal('hide');
             await this.props.deselectBox();

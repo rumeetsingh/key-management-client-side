@@ -16,7 +16,9 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.4",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tweetnacl": "^1.0.1",
+    "tweetnacl-util": "^0.15.0"
   },
   "scripts": {
     "start": "react-scripts start",

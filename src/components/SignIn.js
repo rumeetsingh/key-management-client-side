@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { reduxForm,Field } from 'redux-form';
 import Spinner from './Spinner';
 import { signIn } from '../actions';
+import nacl from 'tweetnacl';
+import utils from 'tweetnacl-util';
 
 
 class SignIn extends React.Component{
@@ -16,16 +18,26 @@ class SignIn extends React.Component{
         };
     };
 
+    encryptString = (password) => {
+        const encodeBase64 = utils.encodeBase64;
+        const nonce = nacl.randomBytes(24);
+        const secretKey = Buffer.from((process.env.REACT_APP_NOT_SECRET_CODE).toString(), 'utf8')
+        const secretData = Buffer.from(password, 'utf8')
+        const encrypted = nacl.secretbox(secretData, nonce, secretKey)
+        const result = `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`
+        return result;
+    };
+
     renderAlert = () => {
         if(this.state.phase===5){
             return (
-                <div class="alert alert-success text-center" role="alert">
+                <div className="alert alert-success text-center" role="alert">
                     Account Created Successfully!
                 </div>
             );
         }else if(this.state.phase===2){
             return (
-                <div class="alert alert-danger text-center" role="alert">
+                <div className="alert alert-danger text-center" role="alert">
                     Incorrect Email or Password!
                 </div>
             );
@@ -54,6 +66,7 @@ class SignIn extends React.Component{
 
     onSubmit = async ({email,password}) => {
         await this.setState({phase:1});
+        password = this.encryptString(password)
         await this.props.signIn({email,password});
         if(this.props.auth.errors){
             this.setState({phase:2});
