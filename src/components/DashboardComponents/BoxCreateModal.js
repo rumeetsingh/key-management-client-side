@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { reduxForm,Field } from 'redux-form';
+import { fetchBoxes } from '../../actions';
+import { connect } from 'react-redux';
 import api from '../../apis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBoxOpen } from '@fortawesome/free-solid-svg-icons'
@@ -22,10 +23,10 @@ class BoxCreateModal extends React.Component{
     };
 
     onSubmit = async ({name}) => {
-        console.log(name);
         try{
-            await api.post('/keys/boxes/',{ name },{ headers : { Authorization : `Bearer ${this.props.auth.token}` } })
-            window.location.reload();
+            await api.post('/keys/boxes/',{ name },{ headers : { Authorization : `Bearer ${this.props.token}` } });
+            await this.props.fetchBoxes(this.props.token);
+            window.$('#boxCreateModal').modal('hide')
         }catch(errors){
             console.log(errors);
         };
@@ -58,12 +59,6 @@ class BoxCreateModal extends React.Component{
 };
 
 
-const mapStateToProps = state => {
-    return {
-        auth : state.auth
-    };
-};
-
 const BoxCreateModalWrapper = reduxForm({ form:'createBox' })(BoxCreateModal);
 
-export default connect(mapStateToProps,)(BoxCreateModalWrapper);
+export default connect(null,{ fetchBoxes })(BoxCreateModalWrapper);

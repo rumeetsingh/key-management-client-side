@@ -23,3 +23,15 @@
 .cursor-pointer{
   cursor: pointer;
 }
+
+.link-like{
+  text-decoration: none;
+  color: #5e72e4;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.link-like:hover{
+  text-decoration: none;
+  color: #233dd2;
+}

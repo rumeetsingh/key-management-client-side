@@ -4,7 +4,9 @@ import {
     FETCH_ACCOUNT_DETAILS,
     SIGN_IN_WITH_TOKEN,
     SIGN_OUT,
-    FETCH_BOXES
+    FETCH_BOXES,
+    SELECT_BOX,
+    DESELECT_BOX,
 } from './types';
 import api from '../apis';
 import history from '../history';
@@ -54,4 +56,17 @@ export const signOut = () => async dispatch => {
 export const fetchBoxes = token => async dispatch => {
     const response = await api.get('/keys/boxes/',{ headers : { Authorization : `Bearer ${token}` } });
     dispatch({ type:FETCH_BOXES,payload:response.data });
+};
+
+export const selectBox = (boxId,boxName,boxCreatedOn) => {
+    return {
+        type : SELECT_BOX,
+        payload : { id:boxId,name:boxName,created_on:boxCreatedOn }
+    };
+};
+
+export const deselectBox = () => {
+    return {
+        type : DESELECT_BOX,
+    };
 };
