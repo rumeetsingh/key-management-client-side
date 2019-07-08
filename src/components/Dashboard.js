@@ -2,7 +2,7 @@ import React from 'react';
 import KeyBoxes from './DashboardComponents/KeyBoxes';
 import KeyBoxDetail from './DashboardComponents/KeyBoxDetail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser,faBoxOpen,faKey } from '@fortawesome/free-solid-svg-icons'
+import { faUser,faBoxOpen,faLock } from '@fortawesome/free-solid-svg-icons'
 import { deselectBox } from '../actions';
 import { connect } from 'react-redux';
 
@@ -36,7 +36,7 @@ class Dashboard extends React.Component{
                                 <span style={{marginRight:'0.5rem'}}><FontAwesomeIcon icon={faBoxOpen} /></span>Key Boxes
                             </a>
                             <a className="nav-link btn-warning mt-2" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">
-                                <span style={{marginRight:'0.5rem'}}><FontAwesomeIcon icon={faKey} /></span>Passwords
+                                <span style={{marginRight:'0.5rem'}}><FontAwesomeIcon icon={faLock} /></span>Passwords
                             </a>
                         </div>
                     </div>

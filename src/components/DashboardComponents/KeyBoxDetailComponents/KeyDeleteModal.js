@@ -1,15 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { reduxForm,Field } from 'redux-form';
-import { deselectBox,fetchBoxes } from '../../../actions';
 import api from '../../../apis';
+import { connect } from 'react-redux';
+import { fetchKeys } from '../../../actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import nacl from 'tweetnacl';
 import utils from 'tweetnacl-util';
 
 
-class BoxDeleteModal extends React.Component{
+class KeyDeleteModal extends React.Component{
 
     state = { phase:0 }
 
@@ -60,10 +60,9 @@ class BoxDeleteModal extends React.Component{
         let id = this.props.data.id;
         let encPAssword = this.encryptString(password);
         try{
-            await api.post('/keys/boxdelete/',{ id:id,password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });
-            await this.props.fetchBoxes(this.props.token);
-            await window.$('#boxDeleteModal').modal('hide');
-            await this.props.deselectBox();
+            await api.post('/keys/keydelete/',{ id:id,password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });
+            await window.$('#keyDeleteModal').modal('hide');
+            await this.props.fetchKeys(this.props.token,this.props.selectedBox.id);
         }catch(errors){
             this.setState({phase:5});
         };
@@ -71,7 +70,7 @@ class BoxDeleteModal extends React.Component{
 
     render() {
         return (
-            <div className="modal fade" id="boxDeleteModal" tabIndex="-1" role="dialog" aria-labelledby="boxDeleteModalLabel" aria-hidden="true">
+            <div className="modal fade" id="keyDeleteModal" tabIndex="-1" role="dialog" aria-labelledby="keyDeleteModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -81,7 +80,7 @@ class BoxDeleteModal extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p>Are you sure you want to delete this Box?</p>
+                            <p>Are you sure you want to delete this Key?</p>
                             <br />
                             <p>Please Enter your password.</p>
                             <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
@@ -97,6 +96,12 @@ class BoxDeleteModal extends React.Component{
 }
 
 
-const BoxDeleteModalWrapper = reduxForm({ form:"deleteBox" })(BoxDeleteModal);
+const mapStateToProps = state => {
+    return {
+        selectedBox : state.ui.selectedBox,
+    };
+};
 
-export default connect(null,{ deselectBox,fetchBoxes })(BoxDeleteModalWrapper);
+const KeyDeleteModalWrapper = reduxForm({ form:'deleteKey' })(KeyDeleteModal);
+
+export default connect(mapStateToProps,{ fetchKeys })(KeyDeleteModalWrapper);

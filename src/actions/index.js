@@ -7,6 +7,8 @@ import {
     FETCH_BOXES,
     SELECT_BOX,
     DESELECT_BOX,
+    FETCH_KEYS,
+    SET_KEYS_TO_NULL,
 } from './types';
 import api from '../apis';
 import history from '../history';
@@ -69,4 +71,13 @@ export const deselectBox = () => {
     return {
         type : DESELECT_BOX,
     };
+};
+
+export const fetchKeys = (token,boxId) => async dispatch => {
+    const response = await api.get(`/keys/keys/?box=${boxId}`,{ headers : { Authorization : `Bearer ${token}` } });
+    dispatch({ type:FETCH_KEYS,payload:response.data });
+};
+
+export const setKeysToNull = () => {
+    return { type : SET_KEYS_TO_NULL };
 };

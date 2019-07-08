@@ -4,6 +4,7 @@ import { selectBox } from '../../actions';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBoxOpen } from '@fortawesome/free-solid-svg-icons';
+import _ from 'lodash';
 
 
 const cleanDate = date => {
@@ -21,7 +22,7 @@ const renderBoxRow = props => {
             <tr key={box.id}>
                 <td><span onClick={() => onSelect(props,box.id,box.name,box.created_on)} className="link-like"><FontAwesomeIcon icon={faBoxOpen} /> {box.name}</span></td>
                 <td>{cleanDate(box.created_on)}</td>
-                <td>{box.id}</td>
+                <td>{_.truncate(box.id,{ length:20,separator: '-',omission: '**********' })}</td>
             </tr>
         );
     });

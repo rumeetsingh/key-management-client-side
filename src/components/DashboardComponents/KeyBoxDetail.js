@@ -1,8 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { deselectBox } from '../../actions';
+import _ from 'lodash';
 import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faKey } from '@fortawesome/free-solid-svg-icons'
 import BoxDeleteModal from './KeyBoxDetailComponents/BoxDeleteModal';
+import KeyCreateModal from './KeyBoxDetailComponents/KeyCreateModal';
+import KeysTable from './KeyBoxDetailComponents/KeysTable';
 
 
 class KeyBoxDetail extends React.Component{
@@ -10,6 +15,10 @@ class KeyBoxDetail extends React.Component{
     cleanDate = date => {
         let d = new Date(date);
         return <Moment>{d}</Moment>
+    };
+
+    componentWillUnmount = () => {
+        this.props.deselectBox();
     };
 
     render() {
@@ -33,7 +42,14 @@ class KeyBoxDetail extends React.Component{
                     </div>
                     <span className="text-warning">Created On: </span>{this.cleanDate(this.props.data.created_on)}
                     <br />
-                    <span className="text-warning">Box ID: </span>{this.props.data.id}
+                    <span className="text-warning">Box ID: </span>{_.truncate(this.props.data.id,{ length:20,separator: '-',omission: '**********' })}
+                    <div className="heading-title text-warning mt-4 mb-3">KEYS</div>
+                    <KeysTable boxId={this.props.data.id} token={this.props.token} />
+                    <button type="button" className="btn btn-warning btn-block" data-toggle="modal" data-target="#keyCreateModal">
+                        <span className="btn-inner--icon"><FontAwesomeIcon icon={faKey} /></span> 
+                        <span className="btn-inner--text">{" "}Create a Key</span>
+                    </button>
+                    <KeyCreateModal boxId={this.props.data.id} token={this.props.token} />
                 </div>
             </div>
         );
