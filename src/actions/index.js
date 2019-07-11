@@ -9,6 +9,7 @@ import {
     DESELECT_BOX,
     FETCH_KEYS,
     SET_KEYS_TO_NULL,
+    FETCH_PASSWORDS,
 } from './types';
 import api from '../apis';
 import history from '../history';
@@ -27,6 +28,7 @@ export const signIn = ({email,password}) => async dispatch => {
         await localStorage.setItem('FoxedoKMSAccess',response.data.access);
         await dispatch(fetchAccountDetails(response.data.access));
         await dispatch(fetchBoxes(response.data.access));
+        await dispatch(fetchPasswords(response.data.access));
         await dispatch({ type:SIGN_IN,payload:response.data.access });
         history.push('/');
     }catch(errors){
@@ -38,6 +40,7 @@ export const signInWithToken = token => async dispatch => {
     try{
         await dispatch(fetchAccountDetails(token));
         await dispatch(fetchBoxes(token));
+        await dispatch(fetchPasswords(token));
         await dispatch({ type:SIGN_IN_WITH_TOKEN,payload:token })
     }catch(errors){
         dispatch(signOut());
@@ -80,4 +83,9 @@ export const fetchKeys = (token,boxId) => async dispatch => {
 
 export const setKeysToNull = () => {
     return { type : SET_KEYS_TO_NULL };
+};
+
+export const fetchPasswords = token => async dispatch => {
+    const response = await api.get('/keys/passcodes/',{ headers : { Authorization : `Bearer ${token}` } });
+    dispatch({ type:FETCH_PASSWORDS,payload:response.data });
 };

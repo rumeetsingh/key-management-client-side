@@ -36,12 +36,12 @@ class KeyRow extends React.Component{
     render() {
         return (
             <tr>
-                <td><span className="link-like no-select"><FontAwesomeIcon icon={faKey} /> {this.props.data.name}</span></td>
+                <td><span className="no-select"><FontAwesomeIcon icon={faKey} /> {this.props.data.name}</span></td>
                 <td>{this.cleanDate(this.props.data.created_on)}</td>
                 {this.renderId()}
                 {this.renderEyeIcon()}
                 <td>
-                    <span className="link-like no-select text-danger" data-toggle="modal" data-target="#keyDeleteModal"><FontAwesomeIcon icon={faTrashAlt} /></span>
+                    <span className="link-like no-select text-danger" data-toggle="modal" data-target={`#keyDeleteModal${this.props.data.id}`}><FontAwesomeIcon icon={faTrashAlt} /></span>
                     <KeyDeleteModal data={this.props.data} token={this.props.token} />
                 </td>
             </tr>

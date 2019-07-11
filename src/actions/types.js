@@ -9,4 +9,6 @@ export const SELECT_BOX = "SELECT_BOX";
 export const DESELECT_BOX = "DESELECT_BOX";
 export const FETCH_KEYS = "FETCH_KEYS";
 export const SET_KEYS_TO_NULL = "SET_KEYS_TO_NULL";
+export const FETCH_PASSWORDS = "FETCH_PASSWORDS";
+
 

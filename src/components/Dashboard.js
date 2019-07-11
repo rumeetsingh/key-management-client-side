@@ -1,6 +1,7 @@
 import React from 'react';
 import KeyBoxes from './DashboardComponents/KeyBoxes';
 import KeyBoxDetail from './DashboardComponents/KeyBoxDetail';
+import Passwords from './DashboardComponents/Passwords';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser,faBoxOpen,faLock } from '@fortawesome/free-solid-svg-icons'
 import { deselectBox } from '../actions';
@@ -46,7 +47,9 @@ class Dashboard extends React.Component{
                             <div className="tab-pane fade mt-3" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 {this.renderKeyBoxesCard()}
                             </div>
-                            <div className="tab-pane fade mt-3" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                            <div className="tab-pane fade mt-3" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                                <Passwords token={this.props.auth.token} />
+                            </div>
                         </div>
                     </div>
                 </div>
