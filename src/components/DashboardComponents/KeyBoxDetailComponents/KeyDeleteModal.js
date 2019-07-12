@@ -57,7 +57,7 @@ class KeyDeleteModal extends React.Component{
 
     onSubmit = async ({password}) => {
         await this.setState({phase:1});
-        let id = this.props.data.id;
+        let id = this.encryptString(this.props.data.id);
         let encPAssword = this.encryptString(password);
         try{
             await api.post('/keys/keydelete/',{ id:id,password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });

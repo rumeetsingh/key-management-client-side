@@ -117,8 +117,6 @@ class PasswordViewModal extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p>Are you sure you want to delete this Password?</p>
-                            <br />
                             <p>Please Enter your password.</p>
                             <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                                 <Field name="password" component={this.renderInput} />
