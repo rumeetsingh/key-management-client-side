@@ -36,7 +36,7 @@ class KeyCreateModal extends React.Component{
 
     onSubmit = async ({name,value}) => {
         try{
-            value = this.encryptString(value)
+            value = this.encryptString(value);
             let box_id = this.props.boxId;
             await api.post('/keys/keys/',{ name,value,box_id },{ headers : { Authorization : `Bearer ${this.props.token}` } });
             await this.props.fetchKeys(this.props.token,this.props.boxId);

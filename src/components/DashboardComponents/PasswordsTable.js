@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock,faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faLock,faTrashAlt,faEye } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import PasswordDeleteModal from './PasswordDeleteModal';
+import PasswordViewModal from './PasswordViewModal';
 
 
 class PasswordRow extends React.Component{
@@ -18,6 +19,10 @@ class PasswordRow extends React.Component{
             <tr>
                 <td><span className="no-select"><FontAwesomeIcon icon={faLock} /> {this.props.data.name}</span></td>
                 <td>{this.cleanDate(this.props.data.created_on)}</td>
+                <td>
+                    <span className="link-like no-select" data-toggle="modal" data-target={`#passwordViewModal${this.props.data.id}`}><FontAwesomeIcon icon={faEye} /></span>
+                    <PasswordViewModal data={this.props.data} token={this.props.token} />
+                </td>
                 <td>
                     <span className="link-like no-select text-danger" data-toggle="modal" data-target={`#passwordDeleteModal${this.props.data.id}`}><FontAwesomeIcon icon={faTrashAlt} /></span>
                     <PasswordDeleteModal data={this.props.data} token={this.props.token} />
@@ -44,9 +49,8 @@ class PasswordsTable extends React.Component{
             <table className="table table-hover table-borderless table-responsive-md table-sm">
             <thead>
                 <tr>
-                    <th scope="col">BOX NAME</th>
+                    <th scope="col">PASSWORD NAME</th>
                     <th scope="col">CREATED ON</th>
-                    <th scope="col">ID</th>
                 </tr>
             </thead>
             <tbody>

@@ -14,9 +14,9 @@ class PasswordCreateModal extends React.Component{
     encryptString = (password) => {
         const encodeBase64 = utils.encodeBase64;
         const nonce = nacl.randomBytes(24);
-        const secretKey = Buffer.from((process.env.REACT_APP_NOT_SECRET_CODE).toString(), 'utf8')
-        const secretData = Buffer.from(password, 'utf8')
-        const encrypted = nacl.secretbox(secretData, nonce, secretKey)
+        const secretKey = Buffer.from((process.env.REACT_APP_NOT_SECRET_CODE).toString(), 'utf8');
+        const secretData = Buffer.from(password, 'utf8');
+        const encrypted = nacl.secretbox(secretData, nonce, secretKey);
         const result = `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`
         return result;
     };
