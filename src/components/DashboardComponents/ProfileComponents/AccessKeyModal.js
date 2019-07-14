@@ -2,19 +2,19 @@ import React from 'react';
 import { reduxForm,Field } from 'redux-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
-import api from '../../apis';
+import api from '../../../apis';
 import nacl from 'tweetnacl';
 import utils from 'tweetnacl-util';
 import _ from 'lodash';
 
 
-class PasswordViewModal extends React.Component{
+class AccessKeyModal extends React.Component{
 
     state = { phase:0,code:null }
 
     componentDidMount() {
-        window.$(`#passwordViewModal${this.props.data.id}`).on('hide.bs.modal',(e) => {
-            clearTimeout(window.passwordViewModalTimer);
+        window.$('#accessKeyModal').on('hide.bs.modal',(e) => {
+            clearTimeout(window.accessKeyModalTimer);
             this.setState({ code:null });
             this.props.reset();
         });
@@ -48,9 +48,9 @@ class PasswordViewModal extends React.Component{
             return (
                 <p>
                     <small>
-                        Password Value: <span className="text-warning">{this.decryptString(this.state.code)}</span>
+                        Access Key: <span className="text-warning">{this.decryptString(this.state.code)}</span>
                         <br />
-                        Password Value will hide in 10 seconds.
+                        Access Key will hide in 10 seconds.
                     </small>
                 </p>
             );
@@ -91,13 +91,12 @@ class PasswordViewModal extends React.Component{
 
     onSubmit = async ({password}) => {
         await this.setState({phase:1});
-        let id = this.props.data.id;
         let encPAssword = this.encryptString(password);
         try{
-            const response = await api.post('/keys/passcodedetail/',{ id:id,password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });
+            const response = await api.post('/users/KLGGzGVx8yBUT7tmDZ3unqsYagYWJa/',{ password:encPAssword },{ headers : { Authorization : `Bearer ${this.props.token}` } });
             await this.setState({ code:response.data });
             await this.setState({phase:2});
-            window.passwordViewModalTimer = setTimeout(() => { this.setState({code:null}); this.props.reset(); },10000)
+            window.accessKeyModalTimer = setTimeout(() => { this.setState({code:null}); this.props.reset(); },10000)
         }catch(errors){
             this.setState({phase:5});
         };
@@ -105,11 +104,11 @@ class PasswordViewModal extends React.Component{
 
     render() {
         return (
-            <div className="modal fade" id={`passwordViewModal${this.props.data.id}`} tabIndex="-1" role="dialog" aria-labelledby="passwordViewModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal fade" id="accessKeyModal" tabIndex="-1" role="dialog" aria-labelledby="accessKeyModalLabel" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h6 className="modal-title" id="modal-title-default">View {this.props.data.name}</h6>
+                            <h6 className="modal-title" id="modal-title-default">View Your Acces Key</h6>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
@@ -130,4 +129,4 @@ class PasswordViewModal extends React.Component{
 }
 
 
-export default reduxForm({ form:'viewPassword' })(PasswordViewModal);
+export default reduxForm({ form:'viewAccessKey' })(AccessKeyModal);

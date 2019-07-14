@@ -33,6 +33,19 @@ class SignUp extends React.Component{
         };
     };
 
+    renderCheckBox = ({input,meta}) => {
+        return (
+            <div className="row my-4">
+                <div className="col-12">
+                <div className="custom-control custom-control-alternative custom-checkbox">
+                    <input {...input} className="custom-control-input" id="customCheckRegister" type="checkbox" checked />
+                    <label className={this.checkBoxclassName(meta)} htmlFor="customCheckRegister"><span>I agree with the <a target="__blank" href="https://www.privacypolicygenerator.info/live.php?token=aPo2el6t4qYsi3HbvlecCND10ry0z30s">Privacy Policy</a></span></label>
+                </div>
+                </div>
+            </div>
+        );
+    };
+
     renderInput = ({input,type,placeholder,icon,meta}) => {
         return(
             <div className="form-group">
@@ -53,19 +66,6 @@ class SignUp extends React.Component{
         }else{
             return "custom-control-label no-select"
         };
-    };
-
-    renderCheckBox = ({input,meta}) => {
-        return (
-            <div className="row my-4">
-                <div className="col-12">
-                <div className="custom-control custom-control-alternative custom-checkbox">
-                    <input {...input} className="custom-control-input" id="customCheckRegister" type="checkbox" />
-                    <label className={this.checkBoxclassName(meta)} htmlFor="customCheckRegister"><span>I agree with the <a target="__blank" href="https://www.privacypolicygenerator.info/live.php?token=aPo2el6t4qYsi3HbvlecCND10ry0z30s">Privacy Policy</a></span></label>
-                </div>
-                </div>
-            </div>
-        );
     };
 
     renderAlert = () => {

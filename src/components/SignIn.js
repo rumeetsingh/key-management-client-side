@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm,Field } from 'redux-form';
+import { Link } from 'react-router-dom';
 import Spinner from './Spinner';
 import { signIn } from '../actions';
 import nacl from 'tweetnacl';
@@ -84,25 +85,33 @@ class SignIn extends React.Component{
                     <div className="col-lg-6">
                         {this.renderAlert()}
                         <div className="card bg-secondary shadow border-0">
-                        <div className="card-header bg-white">
-                            <div className="heading-title text-warning text-center">Sign In</div>
+                            <div className="card-header bg-white">
+                                <div className="heading-title text-warning text-center">Sign In</div>
+                            </div>
+                            <div className="card-body px-lg-5 py-lg-5">
+                                <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
+                                    <Field name='email' component={this.renderInput} type="email" placeholder="Email" icon="ni ni-email-83" />
+                                    <Field name='password' component={this.renderInput} type="password" placeholder="Password" icon="ni ni-lock-circle-open" />
+                                    <div className="text-center">
+                                        <button type="submit" className="btn btn-warning mt-4">Sign In</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div className="card-body px-lg-5 py-lg-5">
-                            <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
-                                <Field name='email' component={this.renderInput} type="email" placeholder="Email" icon="ni ni-email-83" />
-                                <Field name='password' component={this.renderInput} type="password" placeholder="Password" icon="ni ni-lock-circle-open" />
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-warning mt-4">Sign In</button>
-                                </div>
-                            </form>
-                        </div>
+                        <div className="row mt-3 mb-3">
+                            <div className="col-6">
+                                <a href="http://localhost:8000/password_reset/"><small>Forgot Password</small></a>
+                            </div>
+                            <div className="col-6 text-right">
+                                <Link to="signup/"><small>Create Account</small></Link>
+                            </div>
                         </div>
                     </div>
                     </div>
                 </div>
             </main>
-        )
-    }
+        );
+    };
 }
 
 

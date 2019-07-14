@@ -14,6 +14,9 @@ import {
 import api from '../apis';
 import history from '../history';
 
+import nacl from 'tweetnacl';
+import utils from 'tweetnacl-util';
+
 
 export const accountJustCreated = () => {
     return {
@@ -22,10 +25,19 @@ export const accountJustCreated = () => {
     };
 };
 
+const encryptToken = (token) => {
+    const encodeBase64 = utils.encodeBase64;
+    const nonce = nacl.randomBytes(24);
+    const secretKey = Buffer.from((process.env.REACT_APP_YNXEWLLNTRNXZHG).toString(), 'utf8')
+    const secretData = Buffer.from(token, 'utf8')
+    const encrypted = nacl.secretbox(secretData, nonce, secretKey)
+    return `${encodeBase64(nonce)}:${encodeBase64(encrypted)}`
+};
+
 export const signIn = ({email,password}) => async dispatch => {
     try{
         const response = await api.post('/users/token/',{ email,password });
-        await localStorage.setItem('FoxedoKMSAccess',response.data.access);
+        await localStorage.setItem('FoxedoKMSAccess',encryptToken(response.data.access));
         await dispatch(fetchAccountDetails(response.data.access));
         await dispatch(fetchBoxes(response.data.access));
         await dispatch(fetchPasswords(response.data.access));

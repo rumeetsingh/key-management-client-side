@@ -1,4 +1,5 @@
 import React from 'react';
+import Profile from './DashboardComponents/Profile';
 import KeyBoxes from './DashboardComponents/KeyBoxes';
 import KeyBoxDetail from './DashboardComponents/KeyBoxDetail';
 import Passwords from './DashboardComponents/Passwords';
@@ -43,7 +44,9 @@ class Dashboard extends React.Component{
                     </div>
                     <div className="col-md-10">
                         <div className="tab-content" id="v-pills-tabContent">
-                            <div className="tab-pane fade show active mt-3" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">Profile</div>
+                            <div className="tab-pane fade show active mt-3" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                <Profile auth={this.props.auth} />
+                            </div>
                             <div className="tab-pane fade mt-3" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                 {this.renderKeyBoxesCard()}
                             </div>
