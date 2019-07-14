@@ -100,7 +100,7 @@ class SignIn extends React.Component{
                         </div>
                         <div className="row mt-3 mb-3">
                             <div className="col-6">
-                                <a href="http://localhost:8000/password_reset/"><small>Forgot Password</small></a>
+                                <a href="https://foxedokmsapi.herokuapp.com/password_reset/"><small>Forgot Password</small></a>
                             </div>
                             <div className="col-6 text-right">
                                 <Link to="signup/"><small>Create Account</small></Link>
