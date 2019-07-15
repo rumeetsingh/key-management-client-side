@@ -58,7 +58,7 @@ class KeyCreateModal extends React.Component{
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p>Read <span className="link-like">docs</span> for how to access your keys.</p>
+                            <p>Read <a target="_blank" rel="noopener noreferrer" href="https://github.com/rumeetsingh/foxedo-kms-python">docs</a> for how to access your keys.</p>
                             <form onSubmit={this.props.handleSubmit(this.onSubmit)}>
                                 <Field name="name" component={this.renderInput} placeholder="Key Name" />
                                 <Field name="value" component={this.renderInput} placeholder="Value" />

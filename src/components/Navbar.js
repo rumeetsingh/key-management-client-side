@@ -11,6 +11,11 @@ class Navbar extends React.Component{
             return (
                 <ul className="navbar-nav ml-lg-auto">
                     <li className="nav-item">
+                        <a target="_blank" rel="noopener noreferrer" className="nav-link nav-link-icon" href="https://github.com/rumeetsingh/foxedo-kms-python">
+                            Docs
+                        </a>
+                    </li>
+                    <li className="nav-item">
                         <span className="nav-link nav-link-icon">
                             {this.props.auth.details.email}
                         </span>
@@ -29,6 +34,11 @@ class Navbar extends React.Component{
         }else{
             return (
                 <ul className="navbar-nav ml-lg-auto">
+                    <li className="nav-item">
+                        <a target="_blank" rel="noopener noreferrer" className="nav-link nav-link-icon" href="https://github.com/rumeetsingh/foxedo-kms-python">
+                            Docs
+                        </a>
+                    </li>
                     <li className="nav-item">
                         <Link className="nav-link nav-link-icon" to="/signup">
                             Create Account
