@@ -21,6 +21,11 @@ const Profile = props => {
                 <div className="card mt-4">
                     <div className="card-header text-warning"><span style={{marginRight:'0.5rem'}}><FontAwesomeIcon icon={faKey} /></span>Access Keys</div>
                     <div className="card-body">
+                        <div class="alert alert-primary" role="alert">
+                            <strong>PLEASE DO NOT SHARE YOUR ACCESS KEY!</strong>
+                            <br />
+                            You can access your keys with the help of your Access Key. Read <a target="_blank" rel="noopener noreferrer" href="https://github.com/rumeetsingh/foxedo-kms-python">docs</a> for more details.
+                        </div>
                         <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#accessKeyModal">View Your Access Key</button>
                         <AccessKeyModal token={props.auth.token} />
                     </div>
